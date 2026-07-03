@@ -56,8 +56,8 @@ export function TransactionForm({ onSuccess }: { onSuccess?: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-      <h3 className="text-lg font-bold text-gray-900 mb-4">Catat Transaksi</h3>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Catat Transaksi</h3>
       
       {error && <div className="text-red-600 text-sm font-medium bg-red-50 p-2 rounded-lg">{error}</div>}
 

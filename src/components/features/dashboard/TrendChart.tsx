@@ -40,25 +40,26 @@ export function TrendChart() {
   if (isError) return <div className="text-red-500">Error loading chart.</div>
 
   return (
-    <div className="h-80 p-6 bg-white rounded-xl shadow-sm border border-gray-100 w-full mt-6">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">6-Month Trend</h3>
-      <div className="h-64">
+    <div className="p-4 sm:p-6 bg-white rounded-xl shadow-sm border border-gray-100 w-full">
+      <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">Tren 6 Bulan</h3>
+      <div className="h-40 sm:h-64">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data as any[]}>
+          <LineChart data={data as any[]} margin={{ left: -10, right: 4 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#6B7280', fontSize: 12}} dy={10} />
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#6B7280', fontSize: 11}} dy={8} />
             <YAxis 
               axisLine={false} 
               tickLine={false} 
-              tick={{fill: '#6B7280', fontSize: 12}}
+              tick={{fill: '#6B7280', fontSize: 11}}
               tickFormatter={(value) => `${value / 1000}k`}
-              dx={-10}
+              dx={-4}
+              width={40}
             />
             <Tooltip 
-              contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+              contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)', fontSize: '12px' }}
             />
-            <Line type="monotone" dataKey="income" stroke="#10B981" strokeWidth={3} dot={{ r: 4, fill: '#10B981' }} activeDot={{ r: 6 }} name="Income" />
-            <Line type="monotone" dataKey="expense" stroke="#EF4444" strokeWidth={3} dot={{ r: 4, fill: '#EF4444' }} activeDot={{ r: 6 }} name="Expense" />
+            <Line type="monotone" dataKey="income" stroke="#10B981" strokeWidth={2} dot={{ r: 3, fill: '#10B981' }} activeDot={{ r: 5 }} name="Pemasukan" />
+            <Line type="monotone" dataKey="expense" stroke="#EF4444" strokeWidth={2} dot={{ r: 3, fill: '#EF4444' }} activeDot={{ r: 5 }} name="Pengeluaran" />
           </LineChart>
         </ResponsiveContainer>
       </div>

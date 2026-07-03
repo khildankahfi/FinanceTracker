@@ -26,7 +26,7 @@ export function MonthFilter() {
     <select 
       value={startDate.toISOString()} 
       onChange={handleChange}
-      className="block w-48 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 border bg-white text-gray-900 font-medium"
+      className="block w-full sm:w-48 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2 border bg-white text-gray-900 font-medium"
     >
       {months.map((m) => (
         <option key={m.value} value={m.value}>

@@ -63,55 +63,17 @@ export default function BudgetsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Anggaran Bulanan</h1>
+    <div className="flex flex-col gap-4 sm:gap-6">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Anggaran Bulanan</h1>
         <MonthFilter />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Status Anggaran</h3>
-            {isLoading ? (
-              <div className="animate-pulse h-32 bg-gray-100 rounded-xl"></div>
-            ) : budgets?.length === 0 ? (
-              <p className="text-gray-500">Belum ada anggaran untuk bulan ini.</p>
-            ) : (
-              <div className="space-y-6">
-                {budgets?.map((b: any) => {
-                  const limitNum = Number(b.monthlyLimit)
-                  const percentage = Math.min((b.spent / limitNum) * 100, 100)
-                  const isOverBudget = b.spent > limitNum
-
-                  return (
-                    <div key={b.id}>
-                      <div className="flex justify-between items-end mb-2">
-                        <div>
-                          <span className="font-medium text-gray-900">{b.category.name}</span>
-                          <p className="text-xs font-medium text-gray-900 mt-1">{formatCurrency(b.spent)} dari {formatCurrency(limitNum)}</p>
-                        </div>
-                        <span className={`text-sm font-semibold ${isOverBudget ? 'text-red-600' : 'text-gray-900'}`}>
-                          {percentage.toFixed(0)}%
-                        </span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div 
-                          className={`h-2.5 rounded-full ${isOverBudget ? 'bg-red-600' : percentage > 80 ? 'bg-yellow-400' : 'bg-emerald-500'}`} 
-                          style={{ width: `${percentage}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="lg:col-span-1">
-          <form onSubmit={handleSaveBudget} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-4">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Set Anggaran</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Form — first on mobile, last on desktop */}
+        <div className="lg:col-span-1 order-first lg:order-last">
+          <form onSubmit={handleSaveBudget} className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 space-y-4">
+            <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4">Set Anggaran</h3>
             
             <div>
               <label className="block text-sm font-semibold text-gray-900">Kategori</label>
@@ -145,6 +107,46 @@ export default function BudgetsPage() {
               {mutation.isPending ? 'Menyimpan...' : 'Simpan Anggaran'}
             </button>
           </form>
+        </div>
+
+        {/* Budget status — takes most space on desktop */}
+        <div className="lg:col-span-2">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 sm:mb-6">Status Anggaran</h3>
+            {isLoading ? (
+              <div className="animate-pulse h-32 bg-gray-100 rounded-xl"></div>
+            ) : budgets?.length === 0 ? (
+              <p className="text-gray-500 text-sm">Belum ada anggaran untuk bulan ini.</p>
+            ) : (
+              <div className="space-y-5">
+                {budgets?.map((b: any) => {
+                  const limitNum = Number(b.monthlyLimit)
+                  const percentage = Math.min((b.spent / limitNum) * 100, 100)
+                  const isOverBudget = b.spent > limitNum
+
+                  return (
+                    <div key={b.id}>
+                      <div className="flex justify-between items-end mb-2">
+                        <div>
+                          <span className="font-medium text-gray-900 text-sm sm:text-base">{b.category.name}</span>
+                          <p className="text-xs font-medium text-gray-500 mt-0.5">{formatCurrency(b.spent)} dari {formatCurrency(limitNum)}</p>
+                        </div>
+                        <span className={`text-sm font-semibold ${isOverBudget ? 'text-red-600' : 'text-gray-900'}`}>
+                          {percentage.toFixed(0)}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2.5">
+                        <div 
+                          className={`h-2.5 rounded-full transition-all ${isOverBudget ? 'bg-red-600' : percentage > 80 ? 'bg-yellow-400' : 'bg-emerald-500'}`} 
+                          style={{ width: `${percentage}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
